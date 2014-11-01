@@ -1,4 +1,4 @@
-side = --[[Write here side of comPort]]
+side = --[[Write here Port]]
 rCh = peripheral.wrap(side)
 function upScreen()
  term.setCursorPos(1,1)
@@ -44,7 +44,6 @@ function status()
  print("Reactor Status")
  print("Connected to Reactor : ", rCh.getConnected())
  print("Reactor Active : ", rCh.getActive())
- --print("Active Coolant : ", rCh.isActiveliCooled())
  print("Fuel Reactivity : ", rCh.getFuelReactivity())
  print("Energy : ", rCh.getEnergyStored())
  print("Temperature of")
@@ -60,9 +59,8 @@ while true do
 term.clear()
 upScreen()
 term.setCursorPos(1,19)
-write("Enter Command Symbol : ")
-key, num = os.pullEvent--[[Raw]]()
---write(num)
+write("Enter Command : ")
+key, num = os.pullEvent()
 if num == 16 then
  write("quit")
  os.sleep(5)
