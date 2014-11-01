@@ -1,0 +1,135 @@
+side = --[[Write here Port]]
+tCh = peripheral.wrap(side)
+function upScreen()
+ term.setCursorPos(1,1)
+ print("Turbine Command Center")
+ print("q : Quit Center        | a : Activate Turbine")
+ print("d : Deactivate Turbine | s : Turbine Status")
+ print("Venting Options")
+ print("z : Off                | x : Overflow Mode")
+ print("c : All")
+end
+function deactivate()
+ term.clear()
+ tCh.setActive(false)
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('*   TURBINE NOW DEACTIVATED   *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * * *')
+end
+function quit()
+ term.clear()
+ deactivate()
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('* TURBINE NOW IN OFFLINE MODE *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * * *')
+ os.sleep(5)
+ os.reboot()
+end
+function activate()
+ term.clear()
+ tCh.setActive(true)
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('*    TURBINE NOW ACTIVATED    *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * * *')
+end
+function status()
+ term.clear()
+ term.setCursorPos(1, 1)
+ print("Turbine Status")
+ print("Turbine Connected : ", tCh.getConnected())
+ print("Turbine Active : ", tCh.getActive())
+ print("Energy : ", tCh.getEnergyStored(), " RF")
+ print("Rotor Speed : ", tCh.getRotorSpeed(), " RPM")
+ print("Liquid Amount")
+ print("Steam : ", tCh.getInputAmount(), " mB")
+ print("Coolant :", tCh.getOutputAmount(), " mB")
+end
+function ventOff()
+ term.clear()
+ tCh.setVentOff()
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('*      TURBINE VENT OFF     *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * *')
+end
+function ventOverflow()
+ term.clear()
+ tCh.setVentOverflow()
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('*   TURBINE VENT OVERFLOW   *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * *')
+end
+function ventOn()
+ term.clear()
+ tCh.setVentAll()
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('*      TURBINE VENT ON      *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * *')
+end
+while true do
+term.clear()
+upScreen()
+term.setCursorPos(1,19)
+write("Enter Command : ")
+key, num = os.pullEventRaw()
+if num == 16 then
+ write("quit")
+ os.sleep(5)
+ quit()
+end
+if num == 30 then
+ write("active")
+ os.sleep(5)
+ activate()
+ os.sleep(5)
+end
+if num == 32 then 
+ write("deactivate")
+ os.sleep(5)
+ deactivate()
+ os.sleep(5)
+end
+if num == 31 then
+ write("status")
+ os.sleep(5)
+ status()
+ os.sleep(5)
+end
+if num == 44 then
+ write("ventoff")
+ os.sleep(5)
+ ventOff()
+ os.sleep(5)
+end
+if num == 45 then
+ write("ventoverflow")
+ os.sleep(5)
+ ventOverflow()
+ os.sleep(5)
+end
+if num == 46 then
+ write("venton")
+ os.sleep(5)
+ ventOn()
+ os.sleep(5)
+end
+os.sleep(5)
+end
+
