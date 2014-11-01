@@ -1,0 +1,88 @@
+side = --[[Write here side of comPort]]
+rCh = peripheral.wrap(side)
+function upScreen()
+ term.setCursorPos(1,1)
+ print("Reactor Command Center")
+ print("q : Quit Center        | a : Activate Reactor")
+ print("d : Deactivate Reactor | s : Reactor Status")
+end
+function deactivate()
+ term.clear()
+ rCh.setActive(false)
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('*   REACTOR NOW DEACTIVATED   *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * * *')
+end
+function quit()
+ term.clear()
+ deactivate()
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('* REACTOR NOW IN OFFLINE MODE *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * * *')
+ os.sleep(5)
+ os.reboot()
+end
+function activate()
+ term.clear()
+ rCh.setActive(true)
+ term.setCursorPos(11, 9)
+ write('* * * * * * * * * * * * * * * *')
+ term.setCursorPos(11, 10)
+ write('*    REACTOR NOW ACTIVATED    *')
+ term.setCursorPos(11, 11)
+ write('* * * * * * * * * * * * * * * *')
+end
+function status()
+ term.clear()
+ term.setCursorPos(1, 1)
+ print("Reactor Status")
+ print("Connected to Reactor : ", rCh.getConnected())
+ print("Reactor Active : ", rCh.getActive())
+ --print("Active Coolant : ", rCh.isActiveliCooled())
+ print("Fuel Reactivity : ", rCh.getFuelReactivity())
+ print("Energy : ", rCh.getEnergyStored())
+ print("Temperature of")
+ print("Core : ", rCh.getFuelTemperature(), " C")
+ print("Casing : ", rCh.getCasingTemperature(), " C")
+ print("Liquid Amount of")
+ print("Fuel : ", rCh.getFuelAmount(), " mB")
+ print("Waste : ", rCh.getWasteAmount(), " mB")
+ print("Coolant : ", rCh.getCoolantAmount(), " mB")
+ print("Steam : ", rCh.getHotFluidAmount(), " mB")
+end
+while true do
+term.clear()
+upScreen()
+term.setCursorPos(1,19)
+write("Enter Command Symbol : ")
+key, num = os.pullEvent--[[Raw]]()
+--write(num)
+if num == 16 then
+ write("quit")
+ os.sleep(5)
+ quit()
+end
+if num == 30 then
+ write("active")
+ activate()
+ os.sleep(5)
+end
+if num == 32 then 
+ write("deactivate")
+ deactivate()
+ os.sleep(5)
+end
+if num == 31 then
+ write("status")
+ os.sleep(5)
+ status()
+ os.sleep(5)
+end
+os.sleep(5)
+end
